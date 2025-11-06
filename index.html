@@ -1,1144 +1,1627 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Desarrollo Web Premium | Creación de Sitios Web de Élite</title>
+    <title>Psicologa. Veronica Pozo | Psicología de Vanguardia</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Inter:wght@100;200;300;400;500;600&display=swap" rel="stylesheet">
     <style>
-        /* Variables de color y estilos base */
+        /* Variables CSS avanzadas */
         :root {
-            --black-matte: #1a1a1a;
-            --black-dark: #0d0d0d;
-            --black-light: #2a2a2a;
-            --accent-gold: #d4af37;
-            --accent-purple: #8a2be2;
-            --accent-blue: #4169e1;
-            --text-light: #f5f5f5;
-            --text-gray: #b0b0b0;
-            --transition: all 0.3s ease;
+            --primary: #7E6B8F;
+            --secondary: #9F8FB6;
+            --accent: #D4A96A;
+            --light: #F5F3F7;
+            --dark: #2D2A32;
+            --text: #3A3645;
+            --transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+            --shadow-soft: 0 15px 35px rgba(0, 0, 0, 0.05);
+            --shadow-medium: 0 25px 50px rgba(0, 0, 0, 0.1);
+            --shadow-strong: 0 35px 60px rgba(0, 0, 0, 0.15);
+            --gradient-primary: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            --gradient-accent: linear-gradient(135deg, var(--accent) 0%, #E8C989 100%);
+            --gradient-light: linear-gradient(135deg, var(--light) 0%, #FFFFFF 100%);
         }
 
+        /* Reset y estilos base premium */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
         html {
             scroll-behavior: smooth;
+            font-size: 16px;
         }
 
         body {
-            background-color: var(--black-dark);
-            color: var(--text-light);
-            line-height: 1.6;
+            font-family: 'Inter', sans-serif;
+            background-color: var(--light);
+            color: var(--text);
+            line-height: 1.8;
             overflow-x: hidden;
+            font-weight: 300;
+            background: var(--gradient-light);
         }
 
-        /* Botón flotante de WhatsApp */
-        .whatsapp-float {
-            position: fixed;
-            width: 60px;
-            height: 60px;
-            bottom: 25px;
-            right: 25px;
-            background-color: #25d366;
-            color: #FFF;
-            border-radius: 50px;
+        h1, h2, h3, h4, h5 {
+            font-family: 'Cormorant Garamond', serif;
+            font-weight: 500;
+            line-height: 1.2;
+            margin-bottom: 1.5rem;
+        }
+
+        h1 {
+            font-size: 5rem;
+            letter-spacing: -1px;
+            font-weight: 400;
+        }
+
+        h2 {
+            font-size: 3.5rem;
             text-align: center;
-            font-size: 30px;
-            box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4);
-            z-index: 1000;
-            display: flex;
+            margin-bottom: 5rem;
+            position: relative;
+        }
+
+        h2:after {
+            content: '';
+            position: absolute;
+            bottom: -1.5rem;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background: var(--accent);
+            border-radius: 2px;
+        }
+
+        p {
+            margin-bottom: 1.5rem;
+            font-size: 1.15rem;
+            color: var(--text);
+            font-weight: 300;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        section {
+            padding: 150px 0;
+            position: relative;
+        }
+
+        .btn {
+            display: inline-flex;
             align-items: center;
             justify-content: center;
+            padding: 18px 42px;
+            background: var(--accent);
+            color: white;
+            border: none;
+            border-radius: 0;
+            font-size: 1.05rem;
+            font-weight: 400;
+            cursor: pointer;
             transition: var(--transition);
-            animation: pulse 2s infinite;
+            text-decoration: none;
+            box-shadow: var(--shadow-soft);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+            letter-spacing: 1px;
         }
 
-        .whatsapp-float:hover {
-            background-color: #128C7E;
-            transform: scale(1.1);
-            box-shadow: 0 6px 20px rgba(37, 211, 102, 0.6);
-        }
-
-        @keyframes pulse {
-            0% {
-                box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7);
-            }
-            70% {
-                box-shadow: 0 0 0 10px rgba(37, 211, 102, 0);
-            }
-            100% {
-                box-shadow: 0 0 0 0 rgba(37, 211, 102, 0);
-            }
-        }
-
-        /* Estilos de encabezado */
-        header {
-            background-color: rgba(26, 26, 26, 0.95);
-            position: fixed;
+        .btn:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
             width: 100%;
-            z-index: 1000;
-            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.5);
-            backdrop-filter: blur(10px);
+            height: 100%;
+            background: var(--dark);
+            transition: var(--transition);
+            z-index: -1;
+        }
+
+        .btn:hover:before {
+            left: 0;
+        }
+
+        .btn:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-medium);
+            color: white;
+        }
+
+        .btn-secondary {
+            background: transparent;
+            border: 1px solid var(--accent);
+            color: var(--accent);
+        }
+
+        .btn-secondary:before {
+            background: var(--accent);
+        }
+
+        /* Header y Navegación Ultra Premium */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 10000;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(20px);
+            box-shadow: 0 5px 30px rgba(0, 0, 0, 0.08);
+            transition: var(--transition);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .header-scrolled {
+            padding: 0;
+            background: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
         }
 
         .navbar {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 1.5rem 5%;
-            max-width: 1400px;
-            margin: 0 auto;
+            padding: 30px 0;
+            transition: var(--transition);
+        }
+
+        .header-scrolled .navbar {
+            padding: 20px 0;
         }
 
         .logo {
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: var(--text-light);
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.2rem;
+            font-weight: 500;
+            color: var(--dark);
             text-decoration: none;
             display: flex;
             align-items: center;
+            position: relative;
         }
 
-        .logo span {
-            color: var(--accent-gold);
+        .logo:before {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent);
+            transition: var(--transition);
+        }
+
+        .logo:hover:before {
+            width: 100%;
+        }
+
+        .logo i {
+            margin-right: 15px;
+            color: var(--accent);
+            font-size: 2.4rem;
         }
 
         .nav-links {
             display: flex;
-            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links li {
+            margin-left: 50px;
+            position: relative;
         }
 
         .nav-links a {
-            color: var(--text-light);
             text-decoration: none;
-            font-weight: 500;
+            color: var(--dark);
+            font-weight: 300;
+            font-size: 1.1rem;
             transition: var(--transition);
             position: relative;
+            padding: 8px 0;
+            letter-spacing: 0.5px;
+        }
+
+        .nav-links a:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: var(--accent);
+            transition: var(--transition);
         }
 
         .nav-links a:hover {
-            color: var(--accent-gold);
+            color: var(--accent);
         }
 
-        .nav-links a::after {
-            content: '';
-            position: absolute;
-            width: 0;
-            height: 2px;
-            bottom: -5px;
-            left: 0;
-            background-color: var(--accent-gold);
-            transition: var(--transition);
-        }
-
-        .nav-links a:hover::after {
+        .nav-links a:hover:after {
             width: 100%;
         }
 
-        .cta-button {
-            background: linear-gradient(135deg, var(--accent-gold), var(--accent-purple));
-            color: var(--black-dark);
-            padding: 0.8rem 1.5rem;
-            border-radius: 30px;
-            text-decoration: none;
-            font-weight: 600;
-            transition: var(--transition);
-            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
-            border: none;
-            cursor: pointer;
-        }
-
-        .cta-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 20px rgba(212, 175, 55, 0.5);
-        }
-
-        .mobile-menu {
+        .menu-toggle {
             display: none;
             font-size: 1.5rem;
             cursor: pointer;
+            color: var(--primary);
+            transition: var(--transition);
+            z-index: 10001;
         }
 
-        /* Sección Hero */
+        .menu-toggle:hover {
+            color: var(--accent);
+        }
+
+        /* Hero Section Ultra Premium */
         .hero {
-            min-height: 100vh;
+            height: 100vh;
             display: flex;
             align-items: center;
-            padding: 0 5%;
-            background: linear-gradient(rgba(13, 13, 13, 0.8), rgba(13, 13, 13, 0.9)),
-                url('https://images.unsplash.com/photo-1550745165-9bc0b252726f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80') no-repeat center center/cover;
+            background: linear-gradient(135deg, rgba(126, 107, 143, 0.03) 0%, rgba(159, 143, 182, 0.03) 100%);
             position: relative;
             overflow: hidden;
+        }
+
+        .hero:before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 80%;
+            height: 200%;
+            background: var(--gradient-primary);
+            opacity: 0.03;
+            transform: rotate(15deg);
+            border-radius: 50%;
         }
 
         .hero-content {
-            max-width: 800px;
-            z-index: 1;
+            max-width: 700px;
+            z-index: 2;
+            animation: fadeInUp 1.2s cubic-bezier(0.23, 1, 0.32, 1);
         }
 
         .hero h1 {
-            font-size: 3.5rem;
-            margin-bottom: 1.5rem;
-            line-height: 1.2;
-            background: linear-gradient(to right, var(--accent-gold), var(--accent-purple));
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
+            margin-bottom: 2rem;
+            color: var(--dark);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero h1:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100px;
+            height: 3px;
+            background: var(--accent);
         }
 
         .hero p {
-            font-size: 1.2rem;
-            margin-bottom: 2rem;
-            color: var(--text-gray);
+            font-size: 1.4rem;
+            margin-bottom: 3rem;
+            color: var(--primary);
+            font-weight: 300;
+            max-width: 90%;
         }
 
-        .hero-buttons {
+        .hero-btns {
             display: flex;
-            gap: 1rem;
+            gap: 25px;
         }
 
-        .btn-secondary {
-            background: transparent;
-            color: var(--text-light);
-            border: 2px solid var(--accent-gold);
-            padding: 0.8rem 1.5rem;
-            border-radius: 30px;
-            text-decoration: none;
-            font-weight: 600;
-            transition: var(--transition);
-        }
-
-        .btn-secondary:hover {
-            background-color: var(--accent-gold);
-            color: var(--black-dark);
-        }
-
-        /* Sección Servicios */
-        .services {
-            padding: 6rem 5%;
-            background-color: var(--black-matte);
-        }
-
-        .section-title {
-            text-align: center;
-            margin-bottom: 4rem;
-        }
-
-        .section-title h2 {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-            position: relative;
-            display: inline-block;
-        }
-
-        .section-title h2::after {
-            content: '';
+        .hero-image {
             position: absolute;
-            width: 60%;
-            height: 3px;
-            background: linear-gradient(to right, var(--accent-gold), var(--accent-purple));
-            bottom: -10px;
-            left: 20%;
-        }
-
-        .services-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .service-card {
-            background-color: var(--black-light);
-            border-radius: 10px;
-            padding: 2.5rem 2rem;
-            text-align: center;
-            transition: var(--transition);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-        }
-
-        .service-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
-            border-color: var(--accent-gold);
-        }
-
-        .service-icon {
-            font-size: 3rem;
-            margin-bottom: 1.5rem;
-            color: var(--accent-gold);
-        }
-
-        .service-card h3 {
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
-        }
-
-        .service-card p {
-            color: var(--text-gray);
-            margin-bottom: 1.5rem;
-        }
-
-        /* Sección Portafolio */
-        .portfolio {
-            padding: 6rem 5%;
-            background-color: var(--black-dark);
-        }
-
-        .portfolio-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 2rem;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .portfolio-item {
-            position: relative;
-            border-radius: 10px;
+            right: 5%;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 40%;
+            height: 75%;
+            border-radius: 5px;
             overflow: hidden;
-            height: 300px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            box-shadow: var(--shadow-strong);
+            animation: fadeInRight 1.2s cubic-bezier(0.23, 1, 0.32, 1);
+            filter: grayscale(0.2);
+            transition: var(--transition);
         }
 
-        .portfolio-img {
+        .hero-image:hover {
+            filter: grayscale(0);
+            transform: translateY(-50%) scale(1.02);
+        }
+
+        .hero-image img {
             width: 100%;
             height: 100%;
             object-fit: cover;
             transition: var(--transition);
         }
 
-        .portfolio-overlay {
+        /* Servicios Ultra Premium */
+        .services {
+            background: white;
+            position: relative;
+        }
+
+        .services:before {
+            content: '';
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(to bottom, rgba(212, 175, 55, 0.8), rgba(138, 43, 226, 0.8));
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            opacity: 0;
-            transition: var(--transition);
-            padding: 2rem;
-            text-align: center;
+            background: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%237e6b8f' fill-opacity='0.03' fill-rule='evenodd'/%3E%3C/svg%3E");
         }
 
-        .portfolio-item:hover .portfolio-overlay {
-            opacity: 1;
-        }
-
-        .portfolio-item:hover .portfolio-img {
-            transform: scale(1.1);
-        }
-
-        .portfolio-overlay h3 {
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
-        }
-
-        .portfolio-overlay p {
-            margin-bottom: 1.5rem;
-        }
-
-        /* Sección Proceso */
-        .process {
-            padding: 6rem 5%;
-            background-color: var(--black-matte);
-        }
-
-        .process-steps {
-            display: flex;
-            justify-content: space-between;
-            max-width: 1200px;
-            margin: 0 auto;
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 50px;
             position: relative;
-        }
-
-        .process-steps::before {
-            content: '';
-            position: absolute;
-            top: 40px;
-            left: 10%;
-            width: 80%;
-            height: 2px;
-            background: linear-gradient(to right, var(--accent-gold), var(--accent-purple));
             z-index: 1;
         }
 
-        .step {
+        .service-card {
+            background: white;
+            border-radius: 0;
+            padding: 60px 40px;
+            text-align: center;
+            box-shadow: var(--shadow-soft);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+            border: 1px solid rgba(0, 0, 0, 0.03);
+        }
+
+        .service-card:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 0;
+            background: var(--accent);
+            transition: var(--transition);
+            z-index: -1;
+        }
+
+        .service-card:hover:before {
+            height: 100%;
+        }
+
+        .service-card:hover {
+            transform: translateY(-15px);
+            box-shadow: var(--shadow-strong);
+        }
+
+        .service-icon {
+            width: 100px;
+            height: 100px;
+            background: rgba(212, 169, 106, 0.1);
+            border-radius: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 35px;
+            color: var(--accent);
+            font-size: 2.8rem;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .service-icon:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 0;
+            background: var(--accent);
+            transition: var(--transition);
+            z-index: -1;
+        }
+
+        .service-card:hover .service-icon {
+            color: white;
+            transform: rotate(5deg) scale(1.1);
+        }
+
+        .service-card:hover .service-icon:before {
+            height: 100%;
+        }
+
+        .service-card h3 {
+            font-size: 1.8rem;
+            margin-bottom: 25px;
+        }
+
+        /* Sobre Mí Ultra Premium */
+        .about {
+            display: flex;
+            align-items: center;
+            gap: 100px;
+            background: linear-gradient(135deg, rgba(126, 107, 143, 0.03) 0%, rgba(159, 143, 182, 0.03) 100%);
+            position: relative;
+        }
+
+        .about:before {
+            content: '';
+            position: absolute;
+            bottom: -10%;
+            right: -10%;
+            width: 50%;
+            height: 120%;
+            background: var(--gradient-primary);
+            opacity: 0.03;
+            transform: rotate(-15deg);
+            border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%;
+        }
+
+        .about-image {
+            flex: 1;
+            border-radius: 5px;
+            overflow: hidden;
+            box-shadow: var(--shadow-strong);
+            transform: rotate(-2deg);
+            transition: var(--transition);
+            position: relative;
+            z-index: 1;
+        }
+
+        .about-image:hover {
+            transform: rotate(0) scale(1.02);
+        }
+
+        .about-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: var(--transition);
+        }
+
+        .about-image:hover img {
+            transform: scale(1.05);
+        }
+
+        .about-content {
+            flex: 1;
+            position: relative;
+            z-index: 1;
+        }
+
+        .about-content h2 {
+            text-align: left;
+        }
+
+        .about-content h2:after {
+            left: 0;
+            transform: none;
+        }
+
+        .about-stats {
+            display: flex;
+            margin-top: 50px;
+            gap: 50px;
+        }
+
+        .stat {
             text-align: center;
             position: relative;
-            z-index: 2;
-            flex: 1;
-            padding: 0 1rem;
         }
 
-        .step-number {
-            width: 80px;
-            height: 80px;
-            background-color: var(--black-light);
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin: 0 auto 1.5rem;
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: var(--accent-gold);
-            border: 3px solid var(--accent-gold);
+        .stat:before {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 30px;
+            height: 2px;
+            background: var(--accent);
         }
 
-        .step h3 {
-            margin-bottom: 1rem;
-            font-size: 1.3rem;
+        .stat-number {
+            font-size: 3.5rem;
+            font-weight: 300;
+            color: var(--accent);
+            display: block;
+            line-height: 1;
+            font-family: 'Cormorant Garamond', serif;
         }
 
-        .step p {
-            color: var(--text-gray);
+        .stat-text {
+            font-size: 1rem;
+            color: var(--primary);
+            font-weight: 400;
+            letter-spacing: 1px;
         }
 
-        /* Sección Testimonios */
+        /* Testimonios Ultra Premium */
         .testimonials {
-            padding: 6rem 5%;
-            background-color: var(--black-dark);
+            background: white;
+            position: relative;
         }
 
-        .testimonials-container {
+        .testimonials:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 50%;
+            background: linear-gradient(135deg, rgba(126, 107, 143, 0.03) 0%, rgba(159, 143, 182, 0.03) 100%);
+            z-index: 0;
+        }
+
+        .testimonials-slider {
             max-width: 1000px;
             margin: 0 auto;
             position: relative;
+            z-index: 1;
         }
 
-        .testimonial-slide {
-            background-color: var(--black-light);
-            border-radius: 10px;
-            padding: 3rem;
+        .testimonial-card {
+            background: white;
+            border-radius: 0;
+            padding: 70px 60px;
+            box-shadow: var(--shadow-medium);
             text-align: center;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-            margin: 0 1rem;
+            margin: 0 20px;
+            position: relative;
+            border: 1px solid rgba(0, 0, 0, 0.03);
         }
 
         .testimonial-text {
-            font-size: 1.2rem;
             font-style: italic;
-            margin-bottom: 2rem;
-            color: var(--text-light);
+            font-size: 1.4rem;
+            margin-bottom: 40px;
+            position: relative;
+            line-height: 1.8;
+            font-weight: 300;
+        }
+
+        .testimonial-text:before,
+        .testimonial-text:after {
+            content: '"';
+            font-size: 5rem;
+            color: var(--accent);
+            opacity: 0.2;
+            position: absolute;
+            line-height: 1;
+            font-family: 'Cormorant Garamond', serif;
+        }
+
+        .testimonial-text:before {
+            top: -30px;
+            left: -30px;
+        }
+
+        .testimonial-text:after {
+            bottom: -60px;
+            right: -30px;
         }
 
         .testimonial-author {
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 1rem;
+            gap: 25px;
         }
 
         .author-avatar {
-            width: 60px;
-            height: 60px;
+            width: 80px;
+            height: 80px;
             border-radius: 50%;
+            overflow: hidden;
+            border: 2px solid var(--accent);
+            box-shadow: var(--shadow-soft);
+        }
+
+        .author-avatar img {
+            width: 100%;
+            height: 100%;
             object-fit: cover;
-            border: 2px solid var(--accent-gold);
         }
 
         .author-info h4 {
-            font-size: 1.1rem;
-            margin-bottom: 0.3rem;
+            margin-bottom: 8px;
+            font-size: 1.4rem;
         }
 
         .author-info p {
-            color: var(--text-gray);
-            font-size: 0.9rem;
+            margin: 0;
+            color: var(--primary);
+            font-size: 1rem;
+            font-weight: 400;
         }
 
-        /* Sección Contacto */
+        /* Contacto Ultra Premium */
         .contact {
-            padding: 6rem 5%;
-            background-color: var(--black-matte);
+            background: linear-gradient(135deg, rgba(126, 107, 143, 0.03) 0%, rgba(159, 143, 182, 0.03) 100%);
+            position: relative;
+        }
+
+        .contact:before {
+            content: '';
+            position: absolute;
+            top: 10%;
+            left: -10%;
+            width: 40%;
+            height: 80%;
+            background: var(--gradient-primary);
+            opacity: 0.03;
+            transform: rotate(15deg);
+            border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
         }
 
         .contact-container {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 3rem;
-            max-width: 1200px;
-            margin: 0 auto;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 100px;
+            position: relative;
+            z-index: 1;
         }
 
         .contact-info {
             display: flex;
             flex-direction: column;
-            gap: 2rem;
+            gap: 50px;
         }
 
         .contact-item {
             display: flex;
             align-items: flex-start;
-            gap: 1rem;
+            gap: 30px;
         }
 
         .contact-icon {
-            font-size: 1.5rem;
-            color: var(--accent-gold);
-            margin-top: 0.3rem;
+            width: 70px;
+            height: 70px;
+            background: rgba(212, 169, 106, 0.1);
+            border-radius: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--accent);
+            font-size: 1.8rem;
+            flex-shrink: 0;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .contact-icon:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 100%;
+            background: var(--accent);
+            transition: var(--transition);
+            z-index: -1;
+        }
+
+        .contact-item:hover .contact-icon {
+            color: white;
+        }
+
+        .contact-item:hover .contact-icon:before {
+            width: 100%;
         }
 
         .contact-details h3 {
-            margin-bottom: 0.5rem;
-        }
-
-        .contact-details p {
-            color: var(--text-gray);
+            margin-bottom: 15px;
+            font-size: 1.4rem;
         }
 
         .contact-form {
-            background-color: var(--black-light);
-            padding: 2.5rem;
-            border-radius: 10px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            background: white;
+            padding: 60px 50px;
+            box-shadow: var(--shadow-medium);
+            border: 1px solid rgba(0, 0, 0, 0.03);
+            position: relative;
+        }
+
+        .contact-form:before {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            right: 10px;
+            bottom: 10px;
+            border: 1px solid var(--accent);
+            z-index: -1;
+            opacity: 0.3;
         }
 
         .form-group {
-            margin-bottom: 1.5rem;
+            margin-bottom: 35px;
+            position: relative;
         }
 
         .form-group label {
             display: block;
-            margin-bottom: 0.5rem;
-            font-weight: 500;
+            margin-bottom: 12px;
+            font-weight: 400;
+            color: var(--dark);
+            letter-spacing: 0.5px;
         }
 
         .form-control {
             width: 100%;
-            padding: 0.8rem 1rem;
-            background-color: var(--black-dark);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 5px;
-            color: var(--text-light);
+            padding: 20px;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            border-radius: 0;
+            font-size: 1rem;
             transition: var(--transition);
+            font-family: 'Inter', sans-serif;
+            background: rgba(255, 255, 255, 0.8);
         }
 
         .form-control:focus {
             outline: none;
-            border-color: var(--accent-gold);
+            border-color: var(--accent);
+            box-shadow: 0 5px 15px rgba(212, 169, 106, 0.1);
+            background: white;
         }
 
         textarea.form-control {
-            min-height: 150px;
+            min-height: 200px;
             resize: vertical;
         }
 
-        /* Footer */
+        /* Footer Ultra Premium */
         footer {
-            background-color: var(--black-dark);
-            padding: 4rem 5% 2rem;
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            background: var(--dark);
+            color: white;
+            padding: 120px 0 50px;
+            position: relative;
         }
 
         .footer-content {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-            max-width: 1200px;
-            margin: 0 auto 3rem;
+            gap: 60px;
+            margin-bottom: 80px;
+            position: relative;
+            z-index: 1;
         }
 
         .footer-column h3 {
-            font-size: 1.3rem;
-            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+            margin-bottom: 35px;
             position: relative;
-            display: inline-block;
+            padding-bottom: 15px;
         }
 
-        .footer-column h3::after {
+        .footer-column h3:after {
             content: '';
             position: absolute;
-            width: 50%;
-            height: 2px;
-            background-color: var(--accent-gold);
-            bottom: -8px;
+            bottom: 0;
             left: 0;
+            width: 50px;
+            height: 2px;
+            background: var(--accent);
         }
 
         .footer-links {
             list-style: none;
         }
 
-        .footer-links li {  
-            margin-bottom: 0.8rem;
+        .footer-links li {
+            margin-bottom: 18px;
         }
 
         .footer-links a {
-            color: var(--text-gray);
+            color: #b0b7c3;
             text-decoration: none;
             transition: var(--transition);
+            display: flex;
+            align-items: center;
+            font-weight: 300;
+        }
+
+        .footer-links a i {
+            margin-right: 12px;
+            width: 20px;
+            text-align: center;
+            font-size: 0.9rem;
         }
 
         .footer-links a:hover {
-            color: var(--accent-gold);
-            padding-left: 5px;
+            color: var(--accent);
+            padding-left: 8px;
         }
 
         .social-links {
             display: flex;
-            gap: 1rem;
-            margin-top: 1.5rem;
+            gap: 15px;
+            margin-top: 30px;
         }
 
-        .social-link {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background-color: var(--black-light);
+        .social-links a {
             display: flex;
-            justify-content: center;
             align-items: center;
-            color: var(--text-light);
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 0;
+            color: white;
             text-decoration: none;
             transition: var(--transition);
+            font-size: 1.3rem;
+            position: relative;
+            overflow: hidden;
         }
 
-        .social-link:hover {
-            background-color: var(--accent-gold);
-            color: var(--black-dark);
-            transform: translateY(-3px);
+        .social-links a:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 100%;
+            background: var(--accent);
+            transition: var(--transition);
+            z-index: -1;
         }
 
-        .footer-bottom {
+        .social-links a:hover:before {
+            width: 100%;
+        }
+
+        .social-links a:hover {
+            transform: translateY(-5px);
+        }
+
+        .copyright {
             text-align: center;
-            padding-top: 2rem;
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
-            color: var(--text-gray);
-            font-size: 0.9rem;
+            padding-top: 50px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #b0b7c3;
+            font-size: 0.95rem;
+            font-weight: 300;
+            letter-spacing: 0.5px;
         }
 
-        /* Mensajes de estado del formulario */
-        .form-message {
-            padding: 1rem;
-            border-radius: 5px;
-            margin-bottom: 1rem;
-            text-align: center;
-            display: none;
+        /* Animaciones avanzadas */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
-        .form-message.success {
-            background-color: rgba(46, 204, 113, 0.2);
-            border: 1px solid #2ecc71;
-            color: #2ecc71;
-            display: block;
+        @keyframes fadeInRight {
+            from {
+                opacity: 0;
+                transform: translateX(50px) translateY(-50%);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0) translateY(-50%);
+            }
         }
 
-        .form-message.error {
-            background-color: rgba(231, 76, 60, 0.2);
-            border: 1px solid #e74c3c;
-            color: #e74c3c;
-            display: block;
+        .fade-in {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 1s cubic-bezier(0.23, 1, 0.32, 1), transform 1s cubic-bezier(0.23, 1, 0.32, 1);
         }
 
-        .form-message.loading {
-            background-color: rgba(52, 152, 219, 0.2);
-            border: 1px solid #3498db;
-            color: #3498db;
-            display: block;
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
         }
 
-        /* Responsive */
-        @media (max-width: 992px) {
-            .hero h1 {
+        /* Efectos de partículas para el fondo */
+        .particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .particle {
+            position: absolute;
+            background: var(--accent);
+            border-radius: 50%;
+            opacity: 0.1;
+            animation: float 20s infinite linear;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0) rotate(0deg);
+            }
+            100% {
+                transform: translateY(-1000px) rotate(720deg);
+            }
+        }
+
+        /* Efectos de iluminación */
+        .light-effect {
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(212, 169, 106, 0.1) 0%, rgba(212, 169, 106, 0) 70%);
+            border-radius: 50%;
+            z-index: 0;
+        }
+
+        /* Responsive Ultra Premium */
+        @media (max-width: 1400px) {
+            h1 {
+                font-size: 4.2rem;
+            }
+            
+            h2 {
+                font-size: 3rem;
+            }
+            
+            .hero-image {
+                width: 45%;
+            }
+        }
+
+        @media (max-width: 1200px) {
+            h1 {
+                font-size: 3.8rem;
+            }
+            
+            h2 {
                 font-size: 2.8rem;
             }
-
-            .process-steps {
+            
+            .about {
                 flex-direction: column;
-                gap: 3rem;
+                gap: 80px;
             }
+            
+            .about-content h2 {
+                text-align: center;
+            }
+            
+            .about-content h2:after {
+                left: 50%;
+                transform: translateX(-50%);
+            }
+            
+            .hero-image {
+                width: 50%;
+            }
+        }
 
-            .process-steps::before {
-                display: none;
+        @media (max-width: 992px) {
+            .navbar {
+                padding: 25px 0;
+            }
+            
+            .nav-links {
+                position: fixed;
+                top: 0;
+                left: -100%;
+                width: 100%;
+                height: 100vh;
+                background: white;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                transition: var(--transition);
+                box-shadow: var(--shadow-strong);
+                z-index: 9999;
+            }
+            
+            .nav-links.active {
+                left: 0;
+            }
+            
+            .nav-links li {
+                margin: 25px 0;
+            }
+            
+            .menu-toggle {
+                display: block;
+                z-index: 10001;
+            }
+            
+            .hero {
+                flex-direction: column;
+                justify-content: center;
+                text-align: center;
+                padding-top: 120px;
+                height: auto;
+                min-height: 100vh;
+            }
+            
+            .hero-content {
+                max-width: 100%;
+            }
+            
+            .hero h1:after {
+                left: 50%;
+                transform: translateX(-50%);
+            }
+            
+            .hero p {
+                max-width: 100%;
+            }
+            
+            .hero-btns {
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+            
+            .hero-image {
+                position: relative;
+                width: 100%;
+                height: 500px;
+                margin-top: 80px;
+                transform: none;
+                animation: fadeInUp 1.2s cubic-bezier(0.23, 1, 0.32, 1) 0.5s both;
+                right: 0;
+            }
+            
+            section {
+                padding: 100px 0;
+            }
+            
+            .contact-container {
+                grid-template-columns: 1fr;
+                gap: 80px;
             }
         }
 
         @media (max-width: 768px) {
-            .nav-links {
-                display: none;
+            h1 {
+                font-size: 3rem;
             }
-
-            .mobile-menu {
-                display: block;
+            
+            h2 {
+                font-size: 2.2rem;
             }
-
-            .hero h1 {
-                font-size: 2.3rem;
-            }
-
-            .hero-buttons {
+            
+            .hero-btns {
                 flex-direction: column;
-                width: 100%;
+                gap: 20px;
             }
-
-            .hero-buttons a {
+            
+            .btn {
+                width: 100%;
                 text-align: center;
             }
             
-            .whatsapp-float {
-                width: 50px;
-                height: 50px;
-                bottom: 20px;
-                right: 20px;
-                font-size: 25px;
+            .about-stats {
+                flex-direction: column;
+                gap: 40px;
+            }
+            
+            .contact-form {
+                padding: 40px 30px;
+            }
+            
+            .testimonial-card {
+                padding: 50px 30px;
+            }
+            
+            .service-card {
+                padding: 50px 30px;
+            }
+            
+            .services-grid {
+                grid-template-columns: 1fr;
             }
         }
 
         @media (max-width: 576px) {
-            .hero h1 {
-                font-size: 2rem;
-            }
-
-            .section-title h2 {
-                font-size: 2rem;
-            }
-
-            .service-card,
-            .portfolio-item,
-            .testimonial-slide,
-            .contact-form {
-                padding: 1.5rem;
+            h1 {
+                font-size: 2.5rem;
             }
             
-            .whatsapp-float {
-                width: 45px;
-                height: 45px;
-                bottom: 15px;
-                right: 15px;
-                font-size: 22px;
+            h2 {
+                font-size: 2rem;
+            }
+            
+            .container {
+                width: 95%;
+                padding: 0 15px;
+            }
+            
+            .contact-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .contact-info {
+                gap: 40px;
+            }
+            
+            .contact-item {
+                flex-direction: column;
+                text-align: center;
+                gap: 20px;
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 50px;
             }
         }
     </style>
 </head>
-
 <body>
     <!-- Header -->
-    <header>
-        <nav class="navbar">
-            <a href="#" class="logo">Web<span>Elite</span></a>
-            <div class="nav-links">
-                <a href="#inicio">Inicio</a>
-                <a href="#servicios">Servicios</a>
-                <a href="#portafolio">Portafolio</a>
-                <a href="#proceso">Proceso</a>
-                <a href="#contacto">Contacto</a>
-            </div>
-            <a href="#contacto" class="cta-button">Solicitar Presupuesto</a>
-            <div class="mobile-menu">
-                <i class="fas fa-bars"></i>
-            </div>
-        </nav>
+    <header id="header">
+        <div class="container">
+            <nav class="navbar">
+                <a href="#" class="logo"><i class="fas fa-mind-share"></i> Dra. Isabella Montenegro</a>
+                <ul class="nav-links">
+                    <li><a href="#inicio">Inicio</a></li>
+                    <li><a href="#servicios">Servicios</a></li>
+                    <li><a href="#sobre-mi">Sobre Mí</a></li>
+                    <li><a href="#testimonios">Testimonios</a></li>
+                    <li><a href="#contacto">Contacto</a></li>
+                </ul>
+                <div class="menu-toggle">
+                    <i class="fas fa-bars"></i>
+                </div>
+            </nav>
+        </div>
     </header>
 
     <!-- Hero Section -->
     <section class="hero" id="inicio">
-        <div class="hero-content">
-            <h1>Desarrollo Web Premium para Marcas de Élite</h1>
-            <p>Creo experiencias digitales excepcionales que combinan diseño
-                sofisticado, funcionalidad impecable y
-                rendimiento superior. Tu visión, transformada en una
-                presencia web que destaca entre la multitud.</p>
-            <div class="hero-buttons">
-                <a href="#portafolio" class="cta-button">Ver Portafolio</a>
-                <a href="#contacto" class="btn-secondary">Consultoría
-                    Gratuita</a>
+        <div class="light-effect" style="top: 10%; left: 5%;"></div>
+        <div class="light-effect" style="bottom: 10%; right: 10%;"></div>
+        <div class="particles" id="particles-js"></div>
+        <div class="container">
+            <div class="hero-content">
+                <h1>Psicología con Esencia Humana</h1>
+                <p>Terapias integrales que combinan ciencia y compasión para tu bienestar emocional. Un espacio seguro donde redescubrir tu equilibrio interior.</p>
+                <div class="hero-btns">
+                    <a href="#contacto" class="btn">Reservar Consulta</a>
+                    <a href="#servicios" class="btn btn-secondary">Descubrir Enfoque</a>
+                </div>
+            </div>
+            <div class="hero-image">
+                <!-- En una implementación real, aquí iría una imagen profesional -->
+                <div style="width: 100%; height: 100%; background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%); display: flex; align-items: center; justify-content: center; color: white; font-size: 1.2rem; position: relative;">
+                    <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: url('data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\" preserveAspectRatio=\"none\"><path d=\"M0,0 L100,0 L100,100 Z\" fill=\"rgba(255,255,255,0.1)\"/></svg>'); background-size: cover;"></div>
+                    <div style="z-index: 2; text-align: center; padding: 20px;">
+                        <i class="fas fa-user-md" style="font-size: 4rem; margin-bottom: 20px; opacity: 0.8;"></i>
+                        <p style="font-size: 1.4rem; letter-spacing: 2px;">DRA. ISABELLA MONTENEGRO</p>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- Servicios Section -->
+    <!-- Servicios -->
     <section class="services" id="servicios">
-        <div class="section-title">
-            <h2>Servicios Premium</h2>
-            <p>Soluciones web personalizadas para negocios exigentes</p>
-        </div>
-        <div class="services-grid">
-            <div class="service-card">
-                <div class="service-icon">
-                    <i class="fas fa-laptop-code"></i>
+        <div class="container">
+            <h2>Enfoques Terapéuticos</h2>
+            <div class="services-grid">
+                <div class="service-card fade-in">
+                    <div class="service-icon">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <h3>Neuropsicología</h3>
+                    <p>Evaluación e intervención de las funciones cognitivas, emocionales y conductuales en relación con las estructuras y sistemas cerebrales.</p>
                 </div>
-                <h3>Desarrollo Web a Medida</h3>
-                <p>Sitios web completamente personalizados, optimizados para
-                    rendimiento y conversión, con tecnologías
-                    de vanguardia.</p>
-                <a href="#" class="btn-secondary">Más Información</a>
-            </div>
-            <div class="service-card">
-                <div class="service-icon">
-                    <i class="fas fa-shopping-cart"></i>
+                <div class="service-card fade-in">
+                    <div class="service-icon">
+                        <i class="fas fa-heart-circle-check"></i>
+                    </div>
+                    <h3>Terapia de Pareja</h3>
+                    <p>Reconexión emocional y resolución de conflictos mediante técnicas de comunicación efectiva y renovación del vínculo afectivo.</p>
                 </div>
-                <h3>E-Commerce Exclusivo</h3>
-                <p>Tiendas online premium con experiencia de compra
-                    optimizada, pasarelas de pago seguras y gestión de
-                    inventario.</p>
-                <a href="#" class="btn-secondary">Más Información</a>
-            </div>
-            <div class="service-card">
-                <div class="service-icon">
-                    <i class="fas fa-mobile-alt"></i>
+                <div class="service-card fade-in">
+                    <div class="service-icon">
+                        <i class="fas fa-hand-holding-heart"></i>
+                    </div>
+                    <h3>Psicología Humanista</h3>
+                    <p>Enfoque centrado en el potencial humano, el autoconocimiento y la realización personal en un marco de aceptación incondicional.</p>
                 </div>
-                <h3>Diseño Responsive</h3>
-                <p>Interfaces adaptadas perfectamente a todos los
-                    dispositivos, garantizando una experiencia de usuario
-                    excepcional.</p>
-                <a href="#" class="btn-secondary">Más Información</a>
-            </div>
-        </div>
-    </section>
-
-    <!-- Portafolio Section -->
-    <section class="portfolio" id="portafolio">
-        <div class="section-title">
-            <h2>Portafolio de Élite</h2>
-            <p>Proyectos seleccionados que representan mi estándar de
-                calidad</p>
-        </div>
-        <div class="portfolio-grid">
-            <div class="portfolio-item">
-                <img
-                    src="https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
-                    alt="Proyecto 1" class="portfolio-img">
-                <div class="portfolio-overlay">
-                    <h3>Luxury Brand E-Commerce</h3>
-                    <p>Tienda online premium para marca de lujo con
-                        integración de CRM y sistema de reservas
-                        personalizado.</p>
-                    <a href="#" class="btn-secondary">Ver Detalles</a>
+                <div class="service-card fade-in">
+                    <div class="service-icon">
+                        <i class="fas fa-leaf"></i>
+                    </div>
+                    <h3>Mindfulness Integral</h3>
+                    <p>Prácticas de atención plena y meditación para reducir el estrés, aumentar la conciencia y mejorar la calidad de vida.</p>
                 </div>
-            </div>
-            <div class="portfolio-item">
-                <img
-                    src="https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2069&q=80"
-                    alt="Proyecto 2" class="portfolio-img">
-                <div class="portfolio-overlay">
-                    <h3>Corporate Business Platform</h3>
-                    <p>Plataforma corporativa con dashboard administrativo,
-                        sistema de usuarios y reporting avanzado.
-                    </p>
-                    <a href="#" class="btn-secondary">Ver Detalles</a>
+                <div class="service-card fade-in">
+                    <div class="service-icon">
+                        <i class="fas fa-child-reaching"></i>
+                    </div>
+                    <h3>Psicología Infantil</h3>
+                    <p>Acompañamiento especializado en el desarrollo emocional, social y cognitivo de niños y adolescentes mediante enfoques lúdicos.</p>
                 </div>
-            </div>
-            <div class="portfolio-item">
-                <img
-                    src="https://images.unsplash.com/photo-1499951360447-b19be8fe80f5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
-                    alt="Proyecto 3" class="portfolio-img">
-                <div class="portfolio-overlay">
-                    <h3>Creative Agency Website</h3>
-                    <p>Sitio web para agencia creativa con portfolio
-                        interactivo, animaciones personalizadas y CMS
-                        exclusivo.</p>
-                    <a href="#" class="btn-secondary">Ver Detalles</a>
+                <div class="service-card fade-in">
+                    <div class="service-icon">
+                        <i class="fas fa-people-arrows"></i>
+                    </div>
+                    <h3>Terapia Sistémica</h3>
+                    <p>Análisis e intervención en las dinámicas familiares y relacionales para promover cambios positivos en el sistema completo.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Proceso Section -->
-    <section class="process" id="proceso">
-        <div class="section-title">
-            <h2>Proceso de Trabajo</h2>
-            <p>Metodología cuidadosamente diseñada para resultados
-                excepcionales</p>
-        </div>
-        <div class="process-steps">
-            <div class="step">
-                <div class="step-number">1</div>
-                <h3>Consultoría Inicial</h3>
-                <p>Analizamos tus objetivos, audiencia y requisitos para
-                    definir la estrategia perfecta.</p>
+    <!-- Sobre Mí -->
+    <section class="about" id="sobre-mi">
+        <div class="container">
+            <div class="about-image fade-in">
+                <!-- En una implementación real, aquí iría una imagen -->
+                <div style="width: 100%; height: 700px; background: linear-gradient(135deg, var(--accent) 0%, #b8946a 100%); display: flex; align-items: center; justify-content: center; color: white; font-size: 1.2rem; position: relative;">
+                    <div style="text-align: center; position: relative; z-index: 2;">
+                        <i class="fas fa-user-md" style="font-size: 5rem; margin-bottom: 30px; opacity: 0.9;"></i>
+                        <p style="font-size: 1.5rem; letter-spacing: 3px;">DRA. ISABELLA MONTENEGRO</p>
+                        <p style="font-size: 1.1rem; margin-top: 10px;">Psicóloga Clínica · PhD en Neurociencias</p>
+                    </div>
+                </div>
             </div>
-            <div class="step">
-                <div class="step-number">2</div>
-                <h3>Diseño Personalizado</h3>
-                <p>Creo wireframes y mockups exclusivos que reflejan la
-                    identidad única de tu marca.</p>
-            </div>
-            <div class="step">
-                <div class="step-number">3</div>
-                <h3>Desarrollo Avanzado</h3>
-                <p>Implementación con las mejores tecnologías, optimización
-                    SEO y pruebas exhaustivas.</p>
-            </div>
-            <div class="step">
-                <div class="step-number">4</div>
-                <h3>Lanzamiento & Soporte</h3>
-                <p>Despliegue profesional y soporte continuo para garantizar
-                    el máximo rendimiento.</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- Testimonios Section -->
-    <section class="testimonials">
-        <div class="section-title">
-            <h2>Testimonios de Clientes</h2>
-            <p>Lo que dicen quienes han confiado en mi trabajo</p>
-        </div>
-        <div class="testimonials-container">
-            <div class="testimonial-slide">
-                <p class="testimonial-text">"Trabajar con WebElite fue una
-                    experiencia excepcional. Capturaron
-                    perfectamente la esencia de nuestra marca y crearon un
-                    sitio web que superó todas nuestras
-                    expectativas. El proceso fue fluido y profesional en
-                    todo momento."</p>
-                <div class="testimonial-author">
-                    <img
-                        src="https://randomuser.me/api/portraits/women/45.jpg"
-                        alt="Cliente 1" class="author-avatar">
-                    <div class="author-info">
-                        <h4>María González</h4>
-                        <p>Directora de Marketing, LuxuryBrand</p>
+            <div class="about-content">
+                <h2>Mi Filosofía Terapéutica</h2>
+                <p>Con más de 15 años de experiencia en psicología clínica y un doctorado en Neurociencias, he desarrollado un enfoque integral que combina lo mejor de la ciencia psicológica con una profunda comprensión humanista.</p>
+                <p>Mi práctica se sustenta en la convicción de que cada persona posee recursos internos para su sanación y crecimiento. Como terapeuta, mi rol es facilitar el proceso de autodescubrimiento y proporcionar las herramientas necesarias para transitar hacia una vida más plena y significativa.</p>
+                <p>He integrado formaciones en mindfulness, terapia sistémica, neuropsicología y psicología positiva, creando un modelo único que se adapta a las necesidades específicas de cada persona, pareja o familia que acompaño.</p>
+                <div class="about-stats">
+                    <div class="stat">
+                        <span class="stat-number">15+</span>
+                        <span class="stat-text">Años de Experiencia</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number">1200+</span>
+                        <span class="stat-text">Pacientes Atendidos</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number">100%</span>
+                        <span class="stat-text">Compromiso</span>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Contacto Section -->
+    <!-- Testimonios -->
+    <section class="testimonials" id="testimonios">
+        <div class="container">
+            <h2>Voces de Transformación</h2>
+            <div class="testimonials-slider">
+                <div class="testimonial-card fade-in">
+                    <p class="testimonial-text">La Dra. Montenegro transformó mi vida de manera profunda. Después de años de lidiar con ansiedad crónica, encontré en sus sesiones un espacio de seguridad y comprensión. Sus técnicas de mindfulness integradas con terapia cognitiva me dieron herramientas que uso diariamente. Hoy vivo con una serenidad que nunca creí posible.</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">
+                            <!-- En una implementación real, aquí iría una imagen -->
+                            <div style="width: 100%; height: 100%; background: var(--primary); display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 1.5rem;">
+                                AV
+                            </div>
+                        </div>
+                        <div class="author-info">
+                            <h4>Ana Valdez</h4>
+                            <p>Paciente desde 2019</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contacto -->
     <section class="contact" id="contacto">
-        <div class="section-title">
-            <h2>Iniciemos Tu Proyecto</h2>
-            <p>Transformemos tu visión en una realidad digital
-                excepcional</p>
-        </div>
-        <div class="contact-container">
-            <div class="contact-info">
-                <div class="contact-item">
-                    <div class="contact-icon">
-                        <i class="fas fa-map-marker-alt"></i>
+        <div class="container">
+            <h2>Inicia Tu Transformación</h2>
+            <div class="contact-container">
+                <div class="contact-info">
+                    <div class="contact-item fade-in">
+                        <div class="contact-icon">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <div class="contact-details">
+                            <h3>Estudio Principal</h3>
+                            <p>Av. del Bienestar 245, Col. Armonía<br>Ciudad Psique, CP 12345</p>
+                        </div>
                     </div>
-                    <div class="contact-details">
-                        <h3>Ubicación</h3>
-                        <p>Trabajo remoto con clientes internacionales</p>
+                    <div class="contact-item fade-in">
+                        <div class="contact-icon">
+                            <i class="fas fa-phone"></i>
+                        </div>
+                        <div class="contact-details">
+                            <h3>Teléfono Directo</h3>
+                            <p>+1 (555) 123-4567</p>
+                        </div>
                     </div>
-                </div>
-                <div class="contact-item">
-                    <div class="contact-icon">
-                        <i class="fas fa-envelope"></i>
+                    <div class="contact-item fade-in">
+                        <div class="contact-icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <div class="contact-details">
+                            <h3>Email Personal</h3>
+                            <p>consulta@draisabellamontenegro.com</p>
+                        </div>
                     </div>
-                    <div class="contact-details">
-                        <h3>Email</h3>
-                        <p>dilancoronado358@gmail.com</p>
-                    </div>
-                </div>
-                <div class="contact-item">
-                    <div class="contact-icon">
-                        <i class="fas fa-phone"></i>
-                    </div>
-                    <div class="contact-details">
-                        <h3>Teléfono</h3>
-                        <p>+593 96 993 0639</p>
-                    </div>
-                </div>
-                <div class="contact-item">
-                    <div class="contact-icon">
-                        <i class="fas fa-clock"></i>
-                    </div>
-                    <div class="contact-details">
-                        <h3>Horario de Contacto</h3>
-                        <p>Lun - Vie: 9:00 - 18:00</p>
+                    <div class="contact-item fade-in">
+                        <div class="contact-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div class="contact-details">
+                            <h3>Horario de Consultas</h3>
+                            <p>Lunes a Viernes: 9:00 - 19:00<br>Sábados: 10:00 - 14:00</p>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="contact-form">
-                <div id="formMessage" class="form-message"></div>
-                <form id="contactForm">
-                    <div class="form-group">
-                        <label for="name">Nombre Completo</label>
-                        <input type="text" id="name" class="form-control"
-                            required>
-                    </div>
-                    <div class="form-group">
-                        <label for="email">Correo Electrónico</label>
-                        <input type="email" id="email" class="form-control"
-                            required>
-                    </div>
-                    <div class="form-group">
-                        <label for="company">Empresa (Opcional)</label>
-                        <input type="text" id="company"
-                            class="form-control">
-                    </div>
-                    <div class="form-group">
-                        <label for="project">Descripción del
-                            Proyecto</label>
-                        <textarea id="project" class="form-control"
-                            required></textarea>
-                    </div>
-                    <button type="submit" class="cta-button"
-                        style="width: 100%;">Enviar Consulta</button>
-                </form>
+                <div class="contact-form fade-in">
+                    <form id="form-contacto">
+                        <div class="form-group">
+                            <label for="nombre">Nombre Completo</label>
+                            <input type="text" id="nombre" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="telefono">Teléfono</label>
+                            <input type="tel" id="telefono" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="servicio">Servicio de Interés</label>
+                            <select id="servicio" class="form-control" required>
+                                <option value="">Selecciona un enfoque terapéutico</option>
+                                <option value="neuropsicologia">Neuropsicología</option>
+                                <option value="terapia-pareja">Terapia de Pareja</option>
+                                <option value="humanista">Psicología Humanista</option>
+                                <option value="mindfulness">Mindfulness Integral</option>
+                                <option value="infantil">Psicología Infantil</option>
+                                <option value="sistemica">Terapia Sistémica</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="mensaje">Tu Mensaje</label>
+                            <textarea id="mensaje" class="form-control" placeholder="Comparte brevemente tu motivo de consulta..." required></textarea>
+                        </div>
+                        <button type="submit" class="btn">Solicitar Consulta Inicial</button>
+                    </form>
+                </div>
             </div>
         </div>
     </section>
 
     <!-- Footer -->
     <footer>
-        <div class="footer-content">
-            <div class="footer-column">
-                <h3>WebElite</h3>
-                <p>Desarrollo web premium para marcas que buscan destacar en
-                    el mundo digital con soluciones exclusivas
-                    y de alto rendimiento.</p>
-                <div class="social-links">
-                    <a href="#" class="social-link"><i
-                            class="fab fa-linkedin-in"></i></a>
-                    <a href="#" class="social-link"><i
-                            class="fab fa-instagram"></i></a>
-                    <a href="#" class="social-link"><i
-                            class="fab fa-dribbble"></i></a>
-                    <a href="#" class="social-link"><i
-                            class="fab fa-behance"></i></a>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Dra. Isabella Montenegro</h3>
+                    <p>Psicóloga clínica con enfoque integral. Combinando neurociencia, humanismo y mindfulness para tu bienestar emocional y crecimiento personal.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h3>Enlaces de Interés</h3>
+                    <ul class="footer-links">
+                        <li><a href="#inicio"><i class="fas fa-chevron-right"></i> Inicio</a></li>
+                        <li><a href="#servicios"><i class="fas fa-chevron-right"></i> Enfoques Terapéuticos</a></li>
+                        <li><a href="#sobre-mi"><i class="fas fa-chevron-right"></i> Mi Filosofía</a></li>
+                        <li><a href="#testimonios"><i class="fas fa-chevron-right"></i> Experiencias</a></li>
+                        <li><a href="#contacto"><i class="fas fa-chevron-right"></i> Contacto</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Recursos</h3>
+                    <ul class="footer-links">
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Artículos Científicos</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Meditaciones Guiadas</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Talleres Online</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Biblioteca Digital</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Preguntas Frecuentes</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Contacto Directo</h3>
+                    <ul class="footer-links">
+                        <li><a href="#"><i class="fas fa-map-marker-alt"></i> Av. del Bienestar 245</a></li>
+                        <li><a href="tel:+15551234567"><i class="fas fa-phone"></i> +1 (555) 123-4567</a></li>
+                        <li><a href="mailto:consulta@draisabellamontenegro.com"><i class="fas fa-envelope"></i> consulta@draisabellamontenegro.com</a></li>
+                        <li><a href="#"><i class="fas fa-clock"></i> Lun-Vie: 9:00-19:00</a></li>
+                    </ul>
                 </div>
             </div>
-            <div class="footer-column">
-                <h3>Enlaces Rápidos</h3>
-                <ul class="footer-links">
-                    <li><a href="#inicio">Inicio</a></li>
-                    <li><a href="#servicios">Servicios</a></li>
-                    <li><a href="#portafolio">Portafolio</a></li>
-                    <li><a href="#proceso">Proceso</a></li>
-                    <li><a href="#contacto">Contacto</a></li>
-                </ul>
+            <div class="copyright">
+                <p>&copy; 2023 Dra. Isabella Montenegro. Todos los derechos reservados. | Psicología con Esencia Humana</p>
             </div>
-            <div class="footer-column">
-                <h3>Servicios</h3>
-                <ul class="footer-links">
-                    <li><a href="#">Desarrollo Web Personalizado</a></li>
-                    <li><a href="#">E-Commerce Premium</a></li>
-                    <li><a href="#">Diseño UI/UX</a></li>
-                    <li><a href="#">Optimización SEO</a></li>
-                    <li><a href="#">Mantenimiento Web</a></li>
-                </ul>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            <p>&copy; 2023 WebElite. Todos los derechos reservados. |
-                Diseñado con <i class="fas fa-heart"
-                    style="color: var(--accent-gold);"></i> para marcas de
-                élite</p>
         </div>
     </footer>
 
-    <!-- Botón flotante de WhatsApp -->
-    <a href="https://wa.me/qr/6FVSZOIED7H4E1" class="whatsapp-float"
-        target="_blank">
-        <i class="fab fa-whatsapp"></i>
-    </a>
-
     <script>
-        // Configuración de Supabase con tus credenciales
-        const SUPABASE_URL = 'https://kchxqfxltxuckdqxegmh.supabase.co';
-        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtjaHhxZnhsdHh1Y2tkcXhlZ21oIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjIzMDE4MzIsImV4cCI6MjA3Nzg3NzgzMn0.0Xa8rCjqfw0ZmsvSzhgJuA8gI0KII-L5vQJr-A6t6jA';
+        // Menu Toggle avanzado
+        const menuToggle = document.querySelector('.menu-toggle');
+        const navLinks = document.querySelector('.nav-links');
+        const body = document.querySelector('body');
         
-        // Inicializar Supabase
-        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        menuToggle.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            menuToggle.querySelector('i').classList.toggle('fa-bars');
+            menuToggle.querySelector('i').classList.toggle('fa-times');
+            body.style.overflow = navLinks.classList.contains('active') ? 'hidden' : 'auto';
+        });
         
-        // Smooth scrolling para enlaces internos
+        // Header scroll effect mejorado
+        window.addEventListener('scroll', () => {
+            const header = document.getElementById('header');
+            if (window.scrollY > 100) {
+                header.classList.add('header-scrolled');
+            } else {
+                header.classList.remove('header-scrolled');
+            }
+        });
+        
+        // Smooth scrolling premium para anchor links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
-                });
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 100,
+                        behavior: 'smooth'
+                    });
+                    
+                    // Close mobile menu if open
+                    if (navLinks.classList.contains('active')) {
+                        navLinks.classList.remove('active');
+                        menuToggle.querySelector('i').classList.add('fa-bars');
+                        menuToggle.querySelector('i').classList.remove('fa-times');
+                        body.style.overflow = 'auto';
+                    }
+                }
             });
         });
-
-        // Form submission
-        document.getElementById('contactForm').addEventListener('submit', async function (e) {
+        
+        // Form submission con efectos avanzados
+        const contactForm = document.getElementById('form-contacto');
+        contactForm.addEventListener('submit', function(e) {
             e.preventDefault();
             
-            // Obtener datos del formulario
-            const name = document.getElementById('name').value;
-            const email = document.getElementById('email').value;
-            const company = document.getElementById('company').value || '';
-            const project = document.getElementById('project').value;
+            // Simulación de envío exitoso con efectos
+            const submitBtn = this.querySelector('button[type="submit"]');
+            const originalText = submitBtn.textContent;
+            const originalWidth = submitBtn.offsetWidth;
             
-            const formMessage = document.getElementById('formMessage');
-            const submitButton = this.querySelector('button[type="submit"]');
+            submitBtn.style.width = `${originalWidth}px`;
+            submitBtn.textContent = 'Enviando...';
+            submitBtn.disabled = true;
             
-            // Mostrar mensaje de carga
-            formMessage.textContent = 'Enviando consulta...';
-            formMessage.className = 'form-message loading';
-            formMessage.style.display = 'block';
+            // Efecto de carga
+            submitBtn.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Procesando...';
             
-            submitButton.disabled = true;
-            submitButton.textContent = 'Enviando...';
-            
-            try {
-                // Insertar datos en Supabase
-                const { data, error } = await supabase
-                    .from('contactos')
-                    .insert([
-                        { 
-                            nombre: name, 
-                            email: email, 
-                            empresa: company, 
-                            proyecto: project
-                        }
-                    ]);
+            setTimeout(() => {
+                // Efecto de éxito
+                submitBtn.innerHTML = '<i class="fas fa-check"></i> Mensaje Enviado';
+                submitBtn.style.background = '#4CAF50';
                 
-                if (error) {
-                    throw error;
-                }
-                
-                // Mostrar mensaje de éxito
-                formMessage.textContent = '¡Gracias por tu consulta! Me pondré en contacto contigo pronto.';
-                formMessage.className = 'form-message success';
-                
-                // Resetear formulario
-                this.reset();
-                
-            } catch (error) {
-                console.error('Error al enviar el formulario:', error);
-                
-                // Mostrar mensaje de error
-                formMessage.textContent = 'Hubo un error al enviar tu consulta. Por favor, inténtalo de nuevo o contáctame directamente por teléfono o email.';
-                formMessage.className = 'form-message error';
-                
-            } finally {
-                // Restaurar botón
-                submitButton.disabled = false;
-                submitButton.textContent = 'Enviar Consulta';
-                
-                // Ocultar mensaje después de 5 segundos
                 setTimeout(() => {
-                    formMessage.style.display = 'none';
-                }, 5000);
-            }
+                    alert('¡Gracias por tu mensaje! Te contactaré en un plazo máximo de 24 horas para coordinar tu consulta inicial.');
+                    contactForm.reset();
+                    submitBtn.textContent = originalText;
+                    submitBtn.disabled = false;
+                    submitBtn.style.background = '';
+                    submitBtn.style.width = '';
+                }, 1500);
+            }, 2000);
         });
-
-        // Navbar scroll effect
-        window.addEventListener('scroll', function () {
-            const header = document.querySelector('header');
-            if (window.scrollY > 100) {
-                header.style.backgroundColor = 'rgba(13, 13, 13, 0.95)';
-            } else {
-                header.style.backgroundColor = 'rgba(26, 26, 26, 0.95)';
+        
+        // Animación de elementos al hacer scroll mejorada
+        const fadeElements = document.querySelectorAll('.fade-in');
+        
+        const fadeInOnScroll = () => {
+            fadeElements.forEach(element => {
+                const elementTop = element.getBoundingClientRect().top;
+                const elementVisible = 150;
+                
+                if (elementTop < window.innerHeight - elementVisible) {
+                    element.classList.add('visible');
+                }
+            });
+        };
+        
+        // Efecto de escritura para el título principal
+        const heroTitle = document.querySelector('.hero h1');
+        if (heroTitle) {
+            const text = heroTitle.textContent;
+            heroTitle.textContent = '';
+            let i = 0;
+            
+            function typeWriter() {
+                if (i < text.length) {
+                    heroTitle.textContent += text.charAt(i);
+                    i++;
+                    setTimeout(typeWriter, 100);
+                }
             }
-        });
-
-        // Mobile menu toggle
-        document.querySelector('.mobile-menu').addEventListener('click', function () {
-            const navLinks = document.querySelector('.nav-links');
-            navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
+            
+            // Iniciar efecto después de un breve delay
+            setTimeout(typeWriter, 500);
+        }
+        
+        window.addEventListener('scroll', fadeInOnScroll);
+        // Ejecutar una vez al cargar la página
+        fadeInOnScroll();
+        
+        // Crear partículas para el fondo del hero
+        const particlesContainer = document.getElementById('particles-js');
+        
+        if (particlesContainer) {
+            for (let i = 0; i < 40; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+                
+                // Tamaño aleatorio entre 3 y 12px
+                const size = Math.random() * 9 + 3;
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                
+                // Posición aleatoria
+                particle.style.left = `${Math.random() * 100}%`;
+                particle.style.top = `${Math.random() * 100}%`;
+                
+                // Color aleatorio dentro de la paleta
+                const colors = ['#7E6B8F', '#9F8FB6', '#D4A96A'];
+                particle.style.background = colors[Math.floor(Math.random() * colors.length)];
+                
+                // Opacidad aleatoria
+                particle.style.opacity = Math.random() * 0.2 + 0.05;
+                
+                // Animación con delay y duración aleatorias
+                particle.style.animationDelay = `${Math.random() * 20}s`;
+                particle.style.animationDuration = `${Math.random() * 20 + 10}s`;
+                
+                particlesContainer.appendChild(particle);
+            }
+        }
+        
+        // Efecto de parallax suave
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const hero = document.querySelector('.hero');
+            if (hero) {
+                hero.style.backgroundPositionY = `${scrolled * 0.5}px`;
+            }
         });
     </script>
 </body>
-
 </html>
